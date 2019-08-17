@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import TopNavbar from '../TopNavbar';
 import TempSideNav from '../SideNav/TempSideNav';
@@ -17,9 +18,26 @@ const useStyles = makeStyles(theme => ({
     drawerPaper: {
         width: drawerWidth,
     },
+    content: {
+        flexGrow: 1,
+        padding: theme.spacing(3),
+        transition: theme.transitions.create('margin', {
+          easing: theme.transitions.easing.sharp,
+          duration: theme.transitions.duration.leavingScreen,
+        }),
+        marginLeft: '5vw',
+      },
+      contentShift: {
+        transition: theme.transitions.create('margin', {
+          easing: theme.transitions.easing.easeOut,
+          duration: theme.transitions.duration.enteringScreen,
+        }),
+        marginLeft: drawerWidth,
+      }
 }))
 
 const Layout = (props) => {
+    
     const classes = useStyles();
     const [tempSideNavOpen, setTempSideNavOpen] = useState(false);
     const [permanentSideNavOpen, setPermanentSideNavOpen] = useState(false);
@@ -50,7 +68,10 @@ const Layout = (props) => {
                     />
                 </Hidden>
             </nav>
-            <main>
+            <main 
+            className={clsx(classes.content, {
+                [classes.contentShift]: permanentSideNavOpen,
+              })}>
                 {props.children}
             </main>
         </>
