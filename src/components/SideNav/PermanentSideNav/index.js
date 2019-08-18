@@ -24,11 +24,6 @@ const routes = [
         path: '/'
     },
     {
-        text: 'Login',
-        icon: (<ExitToApp />),
-        path: '/login'
-    },
-    {
         text: 'Users',
         icon: (<AccountCircle />),
         path: '/users'
@@ -111,12 +106,14 @@ const PermanentSideNav = (props) => {
                     )
                 })}
             </MenuList>
-            <MenuList>
+           {
+               AuthServ.isLoggedIn ? ( <MenuList>
                 <MenuItem component={Button} onClick={handleLogout} >
                     <ListItemIcon><PowerSettingsNew/></ListItemIcon>
                     <Typography>Logout</Typography>
                 </MenuItem>
-            </MenuList>
+            </MenuList>) : ''
+           }
         </Drawer>
 
     );
