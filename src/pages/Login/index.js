@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -12,6 +12,10 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+
+import AuthServ from '../../services/Auth/auth.service';
+import TokenServ from '../../services/Token/token.service';
+import { getThemeProps } from '@material-ui/styles';
 
 function Copyright() {
   return (
@@ -51,8 +55,32 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function SignIn() {
+export default function SignIn(props) {
   const classes = useStyles();
+
+  const [formData, setFormData] = useState({});
+
+  const handleChange = (e) => { 
+    setFormData(Object.assign(formData, {[e.target.name]: e.target.value}))
+  }
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    console.log(formData)
+    try {
+      const res = await AuthServ.login(formData);
+      const { accessToken } = res.data;
+      TokenServ.token = accessToken;    
+      const next = new URLSearchParams(props.location.search).get('next');
+      props.history.push(next || '/')
+    } catch (error) {
+      if(error.response.data.message) {
+        console.log(error.response.data.message);
+      }
+
+      console.log(error);
+    }
+  }
 
   return (
     <Container component="main" maxWidth="xs">
@@ -64,7 +92,7 @@ export default function SignIn() {
         <Typography component="h1" variant="h5">
           Sign in
         </Typography>
-        <form className={classes.form}>
+        <form className={classes.form} onSubmit={handleSubmit}>
           <TextField
             variant="outlined"
             margin="normal"
@@ -75,6 +103,7 @@ export default function SignIn() {
             name="email"
             autoComplete="email"
             autoFocus
+            onChange={handleChange}
           />
           <TextField
             variant="outlined"
@@ -86,6 +115,7 @@ export default function SignIn() {
             type="password"
             id="password"
             autoComplete="current-password"
+            onChange={handleChange}
           />
           <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
