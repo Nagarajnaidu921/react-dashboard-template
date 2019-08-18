@@ -1,9 +1,14 @@
 import axios from 'axios';
 
 import  SettingsServ from '../Settings/settings.service';
+import TokenServ from '../Token/token.service';
 
 class AuthServ {
     HOST = SettingsServ.HOST;
+
+    get isLoggedIn() {
+        return TokenServ.token;
+    }
 
     API_URL = {
         signup: `${this.HOST}/api/auth/signup`,
