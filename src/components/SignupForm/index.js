@@ -10,6 +10,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import { Link as RouterLink } from 'react-router-dom';
 
 import AuthServ from '../../services/Auth/auth.service';
 
@@ -70,9 +71,13 @@ const SignupForm = (props) => {
 
     try {
       const res = await AuthServ.signUp(formData);
-      console.log(res)
+      console.log(res);
+      props.history.push('/login')
     } catch (error) {
-      console.log(error.response.data.message)
+      if(error.response.data.message) {
+        console.log(error.response.data.message)
+      }
+      console.log(error)
     }
 
   }
@@ -163,7 +168,7 @@ const SignupForm = (props) => {
             </Button>
           <Grid container justify="flex-end">
             <Grid item>
-              <Link href="#" variant="body2">
+              <Link to="/login" component={RouterLink} variant="body2">
                 Already have an account? Sign in
                 </Link>
             </Grid>
