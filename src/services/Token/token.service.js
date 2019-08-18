@@ -8,6 +8,10 @@ class TokenServ {
     get token() {
         return localStorage.getItem(tokenKey);
     }
+
+    removerToken() {
+        localStorage.removeItem(tokenKey);
+    }
 }
 
 export default new TokenServ();

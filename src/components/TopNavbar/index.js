@@ -6,6 +6,8 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
+import { PowerSettingsNew } from '@material-ui/icons';
+
 import { Hidden } from '@material-ui/core';
 
 const drawerWidth = 240;
@@ -13,6 +15,10 @@ const drawerWidth = 240;
 const useStyles = makeStyles(theme => ({
     root: {
         display: 'flex',
+        flexGrow: 1,
+    },
+    title: {
+        flexGrow: 1,
     },
 
     appBar: {
@@ -57,9 +63,21 @@ const TopNavbar = (props) => {
 
                         </IconButton>
                     </Hidden>
-                    <Typography variant="h6" noWrap>
+                    <Typography className={classes.title} variant="h6" noWrap>
                         BrandName
                     </Typography>
+                    <Hidden xsDown>
+                        <IconButton
+                            color="inherit"
+                            edge="end"
+                            aria-label="open drawer"
+                            onClick={props.menuOnClick}
+                        >
+
+                            <PowerSettingsNew />
+
+                        </IconButton>
+                    </Hidden>
                 </Toolbar>
             </AppBar>
 

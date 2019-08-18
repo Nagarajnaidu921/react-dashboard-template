@@ -10,6 +10,10 @@ class AuthServ {
         return TokenServ.token;
     }
 
+    logout() {
+        TokenServ.removerToken();
+    }
+
     API_URL = {
         signup: `${this.HOST}/api/auth/signup`,
         login: `${this.HOST}/api/auth/login`

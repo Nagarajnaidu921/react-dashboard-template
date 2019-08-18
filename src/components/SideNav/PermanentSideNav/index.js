@@ -4,34 +4,33 @@ import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import {
-    List,
-    ListItem,
-    ListItemText,
     MenuList,
     MenuItem,
-    Typography
+    Typography,
+    Button
 } from '@material-ui/core';
 import Divider from '@material-ui/core/Divider';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
-import { ExitToApp, Home, AccountCircle } from '@material-ui/icons';
+import { ExitToApp, Home, AccountCircle, PowerSettingsNew } from '@material-ui/icons';
+import AuthServ from '../../../services/Auth/auth.service';
 
 const drawerWidth = 240;
 
 const routes = [
     {
         text: 'Home',
-        icon: (<Home/>),
+        icon: (<Home />),
         path: '/'
     },
     {
         text: 'Login',
-        icon: (<ExitToApp/>),
+        icon: (<ExitToApp />),
         path: '/login'
     },
     {
         text: 'Users',
-        icon: (<AccountCircle/>),
+        icon: (<AccountCircle />),
         path: '/users'
     },
 
@@ -75,7 +74,10 @@ const useStyles = makeStyles(theme => ({
 
 const PermanentSideNav = (props) => {
     const classes = useStyles();
-
+    const handleLogout = () =>{
+        AuthServ.logout();
+        props.history.push('/login')
+    }
     return (
 
         <Drawer
@@ -108,6 +110,12 @@ const PermanentSideNav = (props) => {
                         </MenuItem>
                     )
                 })}
+            </MenuList>
+            <MenuList>
+                <MenuItem component={Button} onClick={handleLogout} >
+                    <ListItemIcon><PowerSettingsNew/></ListItemIcon>
+                    <Typography>Logout</Typography>
+                </MenuItem>
             </MenuList>
         </Drawer>
 
