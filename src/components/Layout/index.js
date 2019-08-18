@@ -5,6 +5,7 @@ import TopNavbar from '../TopNavbar';
 import TempSideNav from '../SideNav/TempSideNav';
 import PermanentSideNav from '../SideNav/PermanentSideNav';
 import { Hidden } from '@material-ui/core';
+import { BrowserRouter as Router } from "react-router-dom";
 
 const drawerWidth = 240;
 
@@ -55,6 +56,7 @@ const Layout = (props) => {
                 menuOnClick={handleTempSideNavToggle}
                 permanentSideNavOpen={permanentSideNavOpen}
             />
+            <Router>
             <nav className={classes.drawer} aria-label="mailbox folders">
                 <TempSideNav
                     open={tempSideNavOpen}
@@ -74,6 +76,7 @@ const Layout = (props) => {
               })}>
                 {props.children}
             </main>
+            </Router>
         </>
     )
 }

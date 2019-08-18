@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import './App.css';
 import Layout from './components/Layout';
 import SignIn from './pages/Login';
+import Home from './pages/Home';
 import SignupForm from './components/SignupForm'
 
 const routes = [
@@ -23,12 +24,12 @@ function App() {
   return (
     <div className="App">
       <Layout>
-            <Router>
-            <Route path="/" exact component={SignIn} />
+
+            <Route path="/" exact component={Home} />
               {routes.map(x => (
                 <Route {...x} />
               ))}
-            </Router>
+
       </Layout>
     </div>
   );
