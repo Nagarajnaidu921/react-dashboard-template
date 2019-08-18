@@ -13,6 +13,10 @@ class AuthServ {
     async signUp(data) {
         return axios.post(this.API_URL.signup, data);
     }
+
+    async login(data) {
+        return axios.post(this.API_URL.login, data)
+    }
 }
 
 export default new AuthServ();
