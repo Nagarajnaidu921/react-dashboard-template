@@ -1,16 +1,41 @@
 import React from 'react';
+import { Link, withRouter } from 'react-router-dom'
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
-import List from '@material-ui/core/List';
+import {
+    List,
+    ListItem,
+    ListItemText,
+    MenuList,
+    MenuItem,
+    Typography
+} from '@material-ui/core';
 import Divider from '@material-ui/core/Divider';
-import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
+import { ExitToApp, Home, AccountCircle } from '@material-ui/icons';
+
 const drawerWidth = 240;
 
+const routes = [
+    {
+        text: 'Home',
+        icon: (<Home/>),
+        path: '/'
+    },
+    {
+        text: 'Login',
+        icon: (<ExitToApp/>),
+        path: '/login'
+    },
+    {
+        text: 'Users',
+        icon: (<AccountCircle/>),
+        path: '/users'
+    },
+
+]
 const useStyles = makeStyles(theme => ({
 
     drawer: {
@@ -73,27 +98,21 @@ const PermanentSideNav = (props) => {
 
             </div>
             <Divider />
-            <List>
-                {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-                    <ListItem button key={text}>
-                        <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                        <ListItemText primary={text} />
-                    </ListItem>
-                ))}
-            </List>
-            <Divider />
-            <List>
-                {['All mail', 'Trash', 'Spam'].map((text, index) => (
-                    <ListItem button key={text}>
-                        <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                        <ListItemText primary={text} />
-                    </ListItem>
-                ))}
-            </List>
+
+            <MenuList>
+                {routes.map((x, id) => {
+                    return (
+                        <MenuItem key={id} component={Link} to={x.path} selected={x.path === props.location.pathname}>
+                            <ListItemIcon>{x.icon}</ListItemIcon>
+                            <Typography>{x.text}</Typography>
+                        </MenuItem>
+                    )
+                })}
+            </MenuList>
         </Drawer>
 
     );
 }
 
-export default PermanentSideNav;
+export default withRouter(PermanentSideNav);
 
