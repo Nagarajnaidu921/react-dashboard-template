@@ -8,6 +8,9 @@ import Home from './pages/Home';
 import Users from './pages/Users';
 import SignupForm from './components/SignupForm'
 import AuthServ from './services/Auth/auth.service';
+import *  as AuthInterceptor from './services/Auth/authInterceptor.service';
+
+AuthInterceptor.init();
 
 const routes = [
 
