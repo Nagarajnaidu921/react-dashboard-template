@@ -74,11 +74,7 @@ export default function SignIn(props) {
       const next = new URLSearchParams(props.location.search).get('next');
       props.history.push(next || '/')
     } catch (error) {
-      if(error.response.data.message) {
-        console.log(error.response.data.message);
-      }
-
-      console.log(error);
+      console.log(error)
     }
   }
 
