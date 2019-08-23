@@ -28,6 +28,11 @@ const routes = [
         icon: (<AccountCircle />),
         path: '/users'
     },
+    {
+        text: 'Profile',
+        icon: (<AccountCircle />),
+        path: '/profile'
+    },
 
 ]
 const useStyles = makeStyles(theme => ({

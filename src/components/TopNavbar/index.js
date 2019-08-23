@@ -6,8 +6,8 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
-import { PowerSettingsNew } from '@material-ui/icons';
-
+import { AccountCircle, PowerSettingsNew } from '@material-ui/icons';
+import { Menu, MenuItem, MenuList, ListItemIcon } from '@material-ui/core'
 import { Hidden } from '@material-ui/core';
 
 const drawerWidth = 240;
@@ -37,9 +37,26 @@ const useStyles = makeStyles(theme => ({
         }),
     },
 
-}))
+}));
+
+// const profileMenu = (props) => {
+
+//     return ();
+// }
 
 const TopNavbar = (props) => {
+
+    const [anchorEl, setAnchorEl] = React.useState(null);
+
+    function openMenu(event) {
+      setAnchorEl(event.currentTarget);
+    }
+  
+    function closeMenu() {
+      setAnchorEl(null);
+    }
+
+    
     const classes = useStyles();
     // const theme = useTheme();
     return (
@@ -71,14 +88,33 @@ const TopNavbar = (props) => {
                             color="inherit"
                             edge="end"
                             aria-label="open drawer"
-                            onClick={props.menuOnClick}
+                            aria-controls="simple-menu"
+                            aria-haspopup="true" 
+                            onClick={openMenu}
                         >
 
-                            <PowerSettingsNew />
+                            <AccountCircle />
 
                         </IconButton>
                     </Hidden>
+
+                    <Menu
+                        id="simple-menu"
+                        anchorEl={anchorEl}
+                        keepMounted
+                        open={Boolean(anchorEl)}
+                        onClose={closeMenu}
+                    >
+                       
+                        <MenuItem onClick={closeMenu}>
+                            <ListItemIcon><AccountCircle /></ListItemIcon>
+                            <Typography>Edit Propfile</Typography>
+                        </MenuItem>
+                        <MenuItem onClick={closeMenu}>My account</MenuItem>
+                        <MenuItem onClick={closeMenu}>Logout</MenuItem>
+                    </Menu>
                 </Toolbar>
+
             </AppBar>
 
         </div>
