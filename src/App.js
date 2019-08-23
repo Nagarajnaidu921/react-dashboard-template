@@ -6,6 +6,7 @@ import Layout from './components/Layout';
 import SignIn from './pages/Login';
 import Home from './pages/Home';
 import Users from './pages/Users';
+import Profile from './pages/Profile';
 import SignupForm from './components/SignupForm'
 import AuthServ from './services/Auth/auth.service';
 import *  as AuthInterceptor from './services/Auth/authInterceptor.service';
@@ -27,6 +28,11 @@ const routes = [
   {
     path: '/users',
     component: Users,
+    isSecure: true
+  },
+  {
+    path: '/profile',
+    component: Profile,
     isSecure: true
   },
 
