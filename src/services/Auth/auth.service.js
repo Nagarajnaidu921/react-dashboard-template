@@ -2,7 +2,6 @@ import axios from 'axios';
 
 import  SettingsServ from '../Settings/settings.service';
 import TokenServ from '../Token/token.service';
-import { CallToActionSharp } from '@material-ui/icons';
 
 class AuthServ {
     HOST = SettingsServ.HOST;

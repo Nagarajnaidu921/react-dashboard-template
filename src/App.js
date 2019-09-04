@@ -1,6 +1,5 @@
 import React from 'react';
-import { Route, Redirect } from "react-router-dom";
-
+import { Route, Redirect, BrowserRouter as Router } from "react-router-dom";
 import './App.css';
 import Layout from './components/Layout';
 import SignIn from './pages/Login';
@@ -8,6 +7,7 @@ import Home from './pages/Home';
 import Users from './pages/Users';
 import Profile from './pages/Profile';
 import SignupForm from './components/SignupForm'
+import SideNav from './components/SideNav';
 import AuthServ from './services/Auth/auth.service';
 import *  as AuthInterceptor from './services/Auth/authInterceptor.service';
 
@@ -38,22 +38,33 @@ const routes = [
 
 ]
 
-const SecureRoute = ({component: Component, ...rest}) => (
+const SecureRoute = ({ component: Component, ...rest }) => (
   <Route {...rest} render={(props) => (
-    AuthServ.isLoggedIn ?  <Component {...props} /> :  <Redirect to='/login' />
-)}/>
+    AuthServ.isLoggedIn ? <Component {...props} /> : <Redirect to='/login' />
+  )} />
 )
 
 function App() {
+  const [tempSideNavOpen, setTempSideNavOpen] = React.useState(false);
+  const handleTempSideNavToggle = () => {
+    setTempSideNavOpen(!tempSideNavOpen)
+}
   return (
     <div className="App">
-      <Layout>
-            <Route path="/" exact component={Home} />
-              {routes.map((x, id) => (
-                x.isSecure === true ? <SecureRoute key={id} {...x}/> :
-                <Route key={id} {...x} />
-              ))}
-
+      <Layout
+      handleTempSideNavToggle={handleTempSideNavToggle}
+      >
+        <Router>
+          <SideNav
+           tempSideNavOpen={tempSideNavOpen}
+           handleTempSideNavToggle={handleTempSideNavToggle}
+          />
+          <Route path="/" exact component={Home} />
+          {routes.map((x, id) => (
+            x.isSecure === true ? <SecureRoute key={id} {...x} /> :
+              <Route key={id} {...x} />
+          ))}
+        </Router>
       </Layout>
     </div>
   );

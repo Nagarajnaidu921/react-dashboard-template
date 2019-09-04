@@ -6,7 +6,8 @@ class UserServ {
 
     API_URL = {
         getAll: `${this.HOST}/api/user`,
-        profilepic: `${this.HOST}/api/user/profile`,
+        profileDetails: `${this.HOST}/api/user/profile`,
+        profilepic: `${this.HOST}/api/user/profilepic/upload`,
     }
     
     getAllUsers() {
@@ -17,6 +18,10 @@ class UserServ {
         const formdata = new FormData();
         formdata.append('avatar', image);
         return axios.post(this.API_URL.profilepic, formdata);
+    }
+
+    getProfileDetails() {
+        return axios.get(this.API_URL.profileDetails);
     }
 }
 

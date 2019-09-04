@@ -1,18 +1,17 @@
 import React from 'react';
-import { Link, withRouter } from 'react-router-dom'
 import clsx from 'clsx';
+import { Link, withRouter } from 'react-router-dom'
 import { makeStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import {
     MenuList,
     MenuItem,
     Typography,
-    Button
+    Button,
 } from '@material-ui/core';
 import Divider from '@material-ui/core/Divider';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import { ExitToApp, Home, AccountCircle, PowerSettingsNew } from '@material-ui/icons';
+import { Home, AccountCircle, PowerSettingsNew } from '@material-ui/icons';
 import AuthServ from '../../../services/Auth/auth.service';
 
 const drawerWidth = 240;
@@ -74,6 +73,7 @@ const useStyles = makeStyles(theme => ({
 
 const PermanentSideNav = (props) => {
     const classes = useStyles();
+    // console.log(history)
     const handleLogout = () =>{
         AuthServ.logout();
         props.history.push('/login')

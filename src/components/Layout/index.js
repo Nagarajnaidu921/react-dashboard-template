@@ -1,11 +1,6 @@
-import React, { useState } from 'react';
-import clsx from 'clsx';
+import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import TopNavbar from '../TopNavbar';
-import TempSideNav from '../SideNav/TempSideNav';
-import PermanentSideNav from '../SideNav/PermanentSideNav';
-import { Hidden } from '@material-ui/core';
-import { BrowserRouter as Router } from "react-router-dom";
 
 const drawerWidth = 240;
 
@@ -40,43 +35,16 @@ const useStyles = makeStyles(theme => ({
 const Layout = (props) => {
     
     const classes = useStyles();
-    const [tempSideNavOpen, setTempSideNavOpen] = useState(false);
-    const [permanentSideNavOpen, setPermanentSideNavOpen] = useState(false);
-
-    const handleTempSideNavToggle = () => {
-        setTempSideNavOpen(!tempSideNavOpen)
-    }
-    const handlePermanentSideNavToggle = () => {
-        setPermanentSideNavOpen(!permanentSideNavOpen);
-    }
 
     return (
         <>
             <TopNavbar
-                menuOnClick={handleTempSideNavToggle}
-                permanentSideNavOpen={permanentSideNavOpen}
+                menuOnClick={props.handleTempSideNavToggle}
             />
-            <Router>
-            <nav className={classes.drawer} aria-label="mailbox folders">
-                <TempSideNav
-                    open={tempSideNavOpen}
-                    onClose={handleTempSideNavToggle}
-                    classes={{ paper: classes.drawerPaper }}
-                />
-                <Hidden xsDown>
-                    <PermanentSideNav
-                        handleMouseEvent={handlePermanentSideNavToggle}
-                        open={permanentSideNavOpen}
-                    />
-                </Hidden>
-            </nav>
             <main 
-            className={clsx(classes.content, {
-                [classes.contentShift]: permanentSideNavOpen,
-              })}>
+            className={classes.content}>
                 {props.children}
             </main>
-            </Router>
         </>
     )
 }

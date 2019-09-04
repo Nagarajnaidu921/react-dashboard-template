@@ -1,11 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Hidden from '@material-ui/core/Hidden';
 import Drawer from '@material-ui/core/Drawer';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
+import { useTheme } from '@material-ui/core/styles';
 
-const useStyles = makeStyles(theme => ({
 
-}))
 
 const TempSideNav = (props) => {
     const theme = useTheme();

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, createRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import profilPic from '../../images/user.svg';
 import './profile.css';
 import { makeStyles, Container, Grid, Avatar, CssBaseline } from '@material-ui/core';
@@ -35,6 +35,17 @@ const Profile = () => {
     const [avatar, setAvatar] = useState(profilPic);
     const [openProfileEditModal, setOpenProfileEditModal] = useState(false);
 
+    useEffect(() => {
+        const getProfileData = async () => {
+            try {
+                const res = await userService.getProfileDetails();
+                console.log(res.data);
+            } catch (error) {
+                console.log()
+            }
+        }
+        getProfileData();
+    });
     const handleModalToggle = (e) => {
         setOpenProfileEditModal(!openProfileEditModal)
     }
@@ -44,7 +55,7 @@ const Profile = () => {
             try {
                 const res = await userService.uploadProfilePic(newProfilePic);
                 setAvatar(`${userService.HOST}/${res.data.profilePic}`)
-            } catch(error) {
+            } catch (error) {
                 console.log(error);
             }
         }

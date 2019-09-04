@@ -15,7 +15,6 @@ import Container from '@material-ui/core/Container';
 
 import AuthServ from '../../services/Auth/auth.service';
 import TokenServ from '../../services/Token/token.service';
-import { getThemeProps } from '@material-ui/styles';
 
 function Copyright() {
   return (
