@@ -61,26 +61,21 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 });
 
 export default function ProfilepicChangeDialog(props) {
+
     const classes = useStyles();
 
     const [dragging, setDragging] = useState(false);
     const [images, setImages] = useState([]);
 
-    // useEffect(() => {
-    //     setImages([]);
-    // })
     const onDrop = (files) => {
-        console.log(files)
         setImages(files);
     }
 
     const onDrag = (status) => {
         setDragging(status)
-        console.log(dragging)
     }
 
     const handleSave = () => {
-        // props.onSave(images);
         if (images.length >= 0) { 
             props.onSave(images[0]);
         }

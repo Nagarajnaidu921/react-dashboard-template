@@ -6,8 +6,7 @@ import SignIn from './pages/Login';
 import Home from './pages/Home';
 import Users from './pages/Users';
 import Profile from './pages/Profile';
-import SignupForm from './components/SignupForm'
-import SideNav from './components/SideNav';
+import SignupForm from './pages/SignupForm'
 import AuthServ from './services/Auth/auth.service';
 import *  as AuthInterceptor from './services/Auth/authInterceptor.service';
 
@@ -48,25 +47,20 @@ function App() {
   const [tempSideNavOpen, setTempSideNavOpen] = React.useState(false);
   const handleTempSideNavToggle = () => {
     setTempSideNavOpen(!tempSideNavOpen)
-}
+  }
   return (
-    <div className="App">
+    <Router>
       <Layout
-      handleTempSideNavToggle={handleTempSideNavToggle}
+        handleTempSideNavToggle={handleTempSideNavToggle}
       >
-        <Router>
-          <SideNav
-           tempSideNavOpen={tempSideNavOpen}
-           handleTempSideNavToggle={handleTempSideNavToggle}
-          />
-          <Route path="/" exact component={Home} />
-          {routes.map((x, id) => (
-            x.isSecure === true ? <SecureRoute key={id} {...x} /> :
-              <Route key={id} {...x} />
-          ))}
-        </Router>
+        <Route path="/" exact component={Home} />
+        {routes.map((x, id) => (
+          x.isSecure === true ? <SecureRoute key={id} {...x} /> :
+            <Route key={id} {...x} />
+        ))}
+
       </Layout>
-    </div>
+    </Router>
   );
 }
 

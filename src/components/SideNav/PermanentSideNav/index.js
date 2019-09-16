@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import clsx from 'clsx';
 import { Link, withRouter } from 'react-router-dom'
 import { makeStyles } from '@material-ui/core/styles';
@@ -71,30 +71,44 @@ const useStyles = makeStyles(theme => ({
 
 }));
 
-const PermanentSideNav = (props) => {
+const PermanentSideNav = ({ history, open, location, handlePermanentSideNavOpen}) => {
     const classes = useStyles();
     // console.log(history)
-    const handleLogout = () =>{
+    const [isOpen, setIsOpen] = useState(open);
+
+    const handleMouseEnter = () => {
+        handlePermanentSideNavOpen(true)
+        setIsOpen(true);
+    };
+
+    const handleMouseLeave = () => {
+        handlePermanentSideNavOpen(false)
+        setIsOpen(false);
+    };
+
+    const handleLogout = () => {
         AuthServ.logout();
-        props.history.push('/login')
-    }
+        history.push('/login')
+    };
+
+
     return (
 
         <Drawer
             variant="permanent"
             className={clsx(classes.drawer, {
-                [classes.drawerOpen]: props.open,
-                [classes.drawerClose]: !props.open,
+                [classes.drawerOpen]: isOpen,
+                [classes.drawerClose]: !isOpen,
             })}
             classes={{
                 paper: clsx({
-                    [classes.drawerOpen]: props.open,
-                    [classes.drawerClose]: !props.open,
+                    [classes.drawerOpen]: isOpen,
+                    [classes.drawerClose]: !isOpen,
                 }),
             }}
-            open={props.open}
-            onMouseEnter={props.handleMouseEvent}
-            onMouseLeave={props.handleMouseEvent}
+            open={isOpen}
+            onMouseEnter={!open && handleMouseEnter}
+            onMouseLeave={!open && handleMouseLeave}
         >
             <div className={classes.toolbar}>
 
@@ -104,21 +118,21 @@ const PermanentSideNav = (props) => {
             <MenuList>
                 {routes.map((x, id) => {
                     return (
-                        <MenuItem key={id} component={Link} to={x.path} selected={x.path === props.location.pathname}>
+                        <MenuItem key={id} component={Link} to={x.path} selected={x.path === location.pathname}>
                             <ListItemIcon>{x.icon}</ListItemIcon>
                             <Typography>{x.text}</Typography>
                         </MenuItem>
                     )
                 })}
             </MenuList>
-           {
-               AuthServ.isLoggedIn ? ( <MenuList>
-                <MenuItem component={Button} onClick={handleLogout} >
-                    <ListItemIcon><PowerSettingsNew/></ListItemIcon>
-                    <Typography>Logout</Typography>
-                </MenuItem>
-            </MenuList>) : ''
-           }
+            {
+                AuthServ.isLoggedIn ? (<MenuList>
+                    <MenuItem component={Button} onClick={handleLogout} >
+                        <ListItemIcon><PowerSettingsNew /></ListItemIcon>
+                        <Typography>Logout</Typography>
+                    </MenuItem>
+                </MenuList>) : ''
+            }
         </Drawer>
 
     );

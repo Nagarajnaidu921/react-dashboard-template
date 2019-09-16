@@ -21,12 +21,6 @@ const useStyles = makeStyles(theme => ({
 const SideNav = (props) => {
     const classes = useStyles();
 
-    const [permanentSideNavOpen, setPermanentSideNavOpen] = useState(false);
-
-  
-    const handlePermanentSideNavToggle = () => {
-        setPermanentSideNavOpen(!permanentSideNavOpen);
-    }
 
     return (
         <nav className={classes.drawer} aria-label="mailbox folders">
@@ -37,9 +31,7 @@ const SideNav = (props) => {
         />
         <Hidden xsDown>
             <PermanentSideNav
-                handleMouseEvent={handlePermanentSideNavToggle}
-                open={permanentSideNavOpen}
-            />
+            handlePermanentSideNavOpen={props.handlePermanentSideNavOpen}/>
         </Hidden>
     </nav>
     );

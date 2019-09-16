@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import profilPic from '../../images/user.svg';
 import './profile.css';
-import { makeStyles, Container, Grid, Avatar, CssBaseline } from '@material-ui/core';
+import { makeStyles, Container, Grid, Avatar, CssBaseline, Typography } from '@material-ui/core';
 import ProfilepicChangeDialog from '../../components/ProfilepicChangeDialog';
 import userService from '../../services/Users/user.service';
 
@@ -21,7 +21,6 @@ const useStyles = makeStyles(theme => ({
         height: '10vw',
         marginLeft: '20vw',
         borderRadius: '100%',
-        // noxShadow
     },
     bigAvatar: {
         margin: 10,
@@ -33,19 +32,26 @@ const Profile = () => {
     const classes = useStyles();
 
     const [avatar, setAvatar] = useState(profilPic);
+    const [profileDetails, setProfileDetails] = useState({});
     const [openProfileEditModal, setOpenProfileEditModal] = useState(false);
 
-    useEffect(() => {
-        const getProfileData = async () => {
-            try {
-                const res = await userService.getProfileDetails();
-                console.log(res.data);
-            } catch (error) {
-                console.log()
+    const getProfileData = async () => {
+        try {
+            const res = await userService.getProfileDetails();
+            if(res.data.profilePicture) {
+                setAvatar(`${userService.HOST}/${res.data.profilePicture}`);
+                setProfileDetails(res.data);
+
             }
+        } catch (error) {
+            console.log(error)
         }
+    }
+
+    useEffect(() => {
         getProfileData();
-    });
+    }, []);
+
     const handleModalToggle = (e) => {
         setOpenProfileEditModal(!openProfileEditModal)
     }
@@ -54,7 +60,7 @@ const Profile = () => {
         if (newProfilePic) {
             try {
                 const res = await userService.uploadProfilePic(newProfilePic);
-                setAvatar(`${userService.HOST}/${res.data.profilePic}`)
+                setAvatar(`${userService.HOST}/${res.data.profilePic}`);
             } catch (error) {
                 console.log(error);
             }
@@ -64,7 +70,9 @@ const Profile = () => {
 
     return (
         <Container component="main" maxWidth="xs">
+
             <CssBaseline />
+
             <div className={classes.paper}>
                 <Grid container spacing={2} justify="center">
                     <Grid item xs={4} sm={4} >
@@ -72,15 +80,22 @@ const Profile = () => {
                             className={classes.bigAvatar}
                             onClick={handleModalToggle}
                         ></Avatar>
+                        <Typography variant="h2">
+                            {
+                                profileDetails.firstName
+                            }
+                        </Typography>
                     </Grid>
                 </Grid>
             </div>
+
             <ProfilepicChangeDialog
                 onClick={handleModalToggle}
                 onClose={handleModalToggle}
                 onSave={handleSaveProfilePic}
                 open={openProfileEditModal}
             />
+
         </Container>
     );
 }
